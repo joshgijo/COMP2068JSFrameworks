@@ -1,42 +1,35 @@
 // lab2.js
 const prompt = require('prompt');
-
-// Start the prompt
 prompt.start();
 
 // Ask user for input
-prompt.get(['userSelection'], function (err, result) {
-    if (err) {
-        console.error(err);
-        return;
+prompt.get(['userSelection'], function (a, b) {
+    if (a) {
+        console.log("error",a);
     }
+    let userSel = b.userSelection.toLowerCase();
 
-    // Normalize user input (uppercase for consistency)
-    let userSelection = result.userSelection.toUpperCase();
-
-    // Generate computer choice
-    let randomNumber = Math.random();
-    let computerSelection;
-    if (randomNumber <= 0.34) {
-        computerSelection = "PAPER";
-    } else if (randomNumber <= 0.67) {
-        computerSelection = "SCISSORS";
+    let randomNum = Math.random();
+    let computerSel;
+    if (randomNum <= 0.34) {
+        computerSel = "paper";
+    } else if (randomNum <= 0.67) {
+        computerSel = "scissors";
     } else {
-        computerSelection = "ROCK";
+        computerSel = "rock";
     }
 
     // Show choices
-    console.log("User chose: " + userSelection);
-    console.log("Computer chose: " + computerSelection);
-
-    // Determine winner
+    console.log("User choice: " + userSel);
+    console.log("Computer choice: " + computerSel);
+    //Checking outcomes
     let outcome;
-    if (userSelection === computerSelection) {
+    if (userSel === computerSel) {
         outcome = "It's a tie!";
     } else if (
-        (userSelection === "ROCK" && computerSelection === "SCISSORS") ||
-        (userSelection === "PAPER" && computerSelection === "ROCK") ||
-        (userSelection === "SCISSORS" && computerSelection === "PAPER")
+        (userSel === "rock" && computerSel === "scissors") ||
+        (userSel === "paper" && computerSel === "rock") ||
+        (userSel === "scissors" && computerSel === "paper")
     ) {
         outcome = "User Wins!";
     } else {
