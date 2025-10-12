@@ -1,0 +1,44 @@
+<div class="row">
+    <div class="col-lg-8 mx-auto">
+        <h1 class="text-center mb-5">Contact Me</h1>
+        
+        {{#if message}}
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            {{message}}
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+        {{/if}}
+
+        <div class="card">
+            <div class="card-body">
+                <form action="/contact" method="POST">
+                    <div class="mb-3">
+                        <label for="name" class="form-label">Full Name</label>
+                        <input type="text" class="form-control" id="name" name="name" required>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="email" class="form-label">Email Address</label>
+                        <input type="email" class="form-control" id="email" name="email" required>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="message" class="form-label">Message</label>
+                        <textarea class="form-control" id="message" name="message" rows="5" required></textarea>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary">Send Message</button>
+                </form>
+            </div>
+        </div>
+
+        <div class="mt-5 text-center">
+            <h4>Other Ways to Reach Me</h4>
+            <div class="mt-3">
+                <p><strong>Email:</strong> joshgijo735@gmail.com</p>
+                <p><strong>Phone:</strong> (705) 220-4130</p>
+                <p><strong>Location:</strong> Barrie, Canada</p>
+            </div>
+        </div>
+    </div>
+</div>
