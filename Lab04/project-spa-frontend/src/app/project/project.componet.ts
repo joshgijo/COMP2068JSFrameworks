@@ -1,20 +1,20 @@
-import { Component, OnInit } from '@angular/core'; // <-- need OnInit
+import { Component, OnInit } from '@angular/core'; 
 import { ProjectService } from '../services/project.service';
 
 @Component({
   selector: 'app-project',
-  templateUrl: './project.componet.html', // <-- correct file name
+  templateUrl: './project.componet.html', 
   styleUrls: ['./project.componet.css'],
-  standalone: false // <-- note it's style**s**Urls, not styleUrl
+  standalone: false 
 })
-export class ProjectComponet implements OnInit { // <-- class name should match file
+export class ProjectComponet implements OnInit { 
 
-  projects: any[] = []; // <-- variable to hold project data
+  projects: any[] = []; 
 
-  constructor(private projectService: ProjectService) {} // <-- inject service
+  constructor(private projectService: ProjectService) {} 
 
   ngOnInit(): void {
-    this.loadProjects(); // <-- fetch projects when component initializes
+    this.loadProjects(); 
   }
 
   loadProjects(): void {

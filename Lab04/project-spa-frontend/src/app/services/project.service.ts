@@ -7,11 +7,11 @@ import { Observable } from 'rxjs';
 })
 export class ProjectService {
 
-  private apiUrl = 'http://localhost:3000/projects'; // <-- your backend endpoint
+  private apiUrl = 'http://localhost:3000/projects'; 
 
-  constructor(private http: HttpClient) { } // <-- dependency injection
+  constructor(private http: HttpClient) { } 
 
   getProjects(): Observable<any> {
-    return this.http.get<any>(this.apiUrl); // <-- call backend API
+    return this.http.get<any>(this.apiUrl); 
   }
 }
