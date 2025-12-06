@@ -1,0 +1,109 @@
+<div class="row">
+    <div class="col-12 mb-4">
+        <div class="d-flex justify-content-between align-items-center">
+            <h1>Task Statistics</h1>
+            <a href="/tasks" class="btn btn-outline-primary">
+                <i class="fas fa-arrow-left me-2"></i>Back to Tasks
+            </a>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-8">
+        <div class="card shadow mb-4">
+            <div class="card-header bg-info text-white">
+                <h4 class="card-title mb-0"><i class="fas fa-chart-pie me-2"></i>Task Distribution</h4>
+            </div>
+            <div class="card-body">
+                <canvas id="taskStatsChart" width="400" height="200"></canvas>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-4">
+        <div class="card shadow mb-4">
+            <div class="card-header bg-success text-white">
+                <h4 class="card-title mb-0"><i class="fas fa-chart-bar me-2"></i>Summary</h4>
+            </div>
+            <div class="card-body">
+                <ul class="list-group list-group-flush">
+                    {{#each stats}}
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        {{_id}}
+                        <span class="badge bg-primary rounded-pill">{{count}}</span>
+                    </li>
+                    {{/each}}
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <strong>Total Tasks</strong>
+                        <span class="badge bg-dark rounded-pill">
+                            {{#reduce stats 0}}{{sum count}}{{/reduce}}
+                        </span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="card shadow">
+            <div class="card-header bg-warning text-dark">
+                <h4 class="card-title mb-0"><i class="fas fa-lightbulb me-2"></i>Tips</h4>
+            </div>
+            <div class="card-body">
+                <ul class="list-unstyled">
+                    <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i>Try to complete at least 3 tasks daily</li>
+                    <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i>Prioritize high-priority tasks first</li>
+                    <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i>Break large tasks into smaller subtasks</li>
+                    <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i>Set realistic due dates</li>
+                    <li><i class="fas fa-check-circle text-success me-2"></i>Review and update tasks regularly</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const stats = {{{json stats}}};
+        
+        const labels = stats.map(stat => stat._id);
+        const data = stats.map(stat => stat.count);
+        const backgroundColors = [
+            'rgba(255, 99, 132, 0.8)',
+            'rgba(54, 162, 235, 0.8)',
+            'rgba(255, 206, 86, 0.8)'
+        ];
+        
+        const ctx = document.getElementById('taskStatsChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'pie',
+            data: {
+                labels: labels,
+                datasets: [{
+                    data: data,
+                    backgroundColor: backgroundColors,
+                    borderWidth: 2,
+                    borderColor: '#fff'
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'bottom'
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                const total = context.dataset.data.reduce((a, b) => a + b, 0);
+                                const value = context.raw;
+                                const percentage = Math.round((value / total) * 100);
+                                return `${context.label}: ${value} (${percentage}%)`;
+                            }
+                        }
+                    }
+                }
+            }
+        });
+    });
+</script>

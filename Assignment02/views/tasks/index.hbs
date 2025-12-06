@@ -1,0 +1,94 @@
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h1>My Tasks</h1>
+    <a href="/tasks/add" class="btn btn-primary">
+        <i class="fas fa-plus me-2"></i>Add New Task
+    </a>
+</div>
+
+<!-- Search and Filter Form -->
+<div class="card mb-4">
+    <div class="card-body">
+        <form method="GET" class="row g-3">
+            <div class="col-md-4">
+                <input type="text" class="form-control" name="search" placeholder="Search tasks..." value="{{search}}">
+            </div>
+            <div class="col-md-2">
+                <select class="form-select" name="category">
+                    <option value="all" {{#unless filters.category}}selected{{/unless}}>All Categories</option>
+                    <option value="work" {{#ifEquals filters.category 'work'}}selected{{/ifEquals}}>Work</option>
+                    <option value="personal" {{#ifEquals filters.category 'personal'}}selected{{/ifEquals}}>Personal</option>
+                    <option value="study" {{#ifEquals filters.category 'study'}}selected{{/ifEquals}}>Study</option>
+                    <option value="health" {{#ifEquals filters.category 'health'}}selected{{/ifEquals}}>Health</option>
+                </select>
+            </div>
+            <div class="col-md-2">
+                <select class="form-select" name="status">
+                    <option value="all" {{#unless filters.status}}selected{{/unless}}>All Status</option>
+                    <option value="pending" {{#ifEquals filters.status 'pending'}}selected{{/ifEquals}}>Pending</option>
+                    <option value="in-progress" {{#ifEquals filters.status 'in-progress'}}selected{{/ifEquals}}>In Progress</option>
+                    <option value="completed" {{#ifEquals filters.status 'completed'}}selected{{/ifEquals}}>Completed</option>
+                </select>
+            </div>
+            <div class="col-md-2">
+                <select class="form-select" name="priority">
+                    <option value="all" {{#unless filters.priority}}selected{{/unless}}>All Priorities</option>
+                    <option value="low" {{#ifEquals filters.priority 'low'}}selected{{/ifEquals}}>Low</option>
+                    <option value="medium" {{#ifEquals filters.priority 'medium'}}selected{{/ifEquals}}>Medium</option>
+                    <option value="high" {{#ifEquals filters.priority 'high'}}selected{{/ifEquals}}>High</option>
+                </select>
+            </div>
+            <div class="col-md-2">
+                <button type="submit" class="btn btn-primary w-100">Filter</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Tasks List -->
+{{#if tasks.length}}
+<div class="row">
+    {{#each tasks}}
+    <div class="col-md-6 col-lg-4 mb-4">
+        <div class="card h-100 task-card">
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-start mb-2">
+                    <h5 class="card-title">{{title}}</h5>
+                    <span class="badge bg-{{priorityColor}}">{{priority}}</span>
+                </div>
+                <p class="card-text text-muted small mb-2">{{description}}</p>
+                <div class="mb-3">
+                    <span class="badge bg-secondary">{{category}}</span>
+                    <span class="badge bg-{{statusColor}} ms-1">{{status}}</span>
+                </div>
+                {{#if dueDate}}
+                <p class="mb-2">
+                    <i class="far fa-calendar-alt me-2"></i>
+                    Due: {{formatDate dueDate}}
+                </p>
+                {{/if}}
+                <div class="d-flex justify-content-between">
+                    <a href="/tasks/{{_id}}/edit" class="btn btn-sm btn-outline-primary">
+                        <i class="fas fa-edit me-1"></i>Edit
+                    </a>
+                    <form action="/tasks/{{_id}}?_method=DELETE" method="POST" class="delete-form">
+                        <button type="button" class="btn btn-sm btn-outline-danger delete-btn">
+                            <i class="fas fa-trash me-1"></i>Delete
+                        </button>
+                    </form>
+                </div>
+            </div>
+            <div class="card-footer text-muted small">
+                Created: {{formatDate createdAt}}
+            </div>
+        </div>
+    </div>
+    {{/each}}
+</div>
+{{else}}
+<div class="alert alert-info text-center">
+    <i class="fas fa-info-circle fa-2x mb-3"></i>
+    <h4>No tasks found</h4>
+    <p>Get started by adding your first task!</p>
+    <a href="/tasks/add" class="btn btn-primary">Add Your First Task</a>
+</div>
+{{/if}}

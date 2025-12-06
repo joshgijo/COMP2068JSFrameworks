@@ -1,0 +1,76 @@
+<div class="row">
+    <div class="col-12 mb-4">
+        <div class="hero-section text-center py-4">
+            <h1 class="display-5 fw-bold mb-3">Public Task Gallery</h1>
+            <p class="lead mb-3">View completed tasks from Task Tracker users around the world</p>
+            <p class="text-muted"><small>Note: This is a read-only view. To manage your own tasks, please register or login.</small></p>
+        </div>
+    </div>
+</div>
+
+{{#if tasks.length}}
+<div class="row">
+    {{#each tasks}}
+    <div class="col-md-6 col-lg-4 mb-4">
+        <div class="card h-100 task-card">
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-start mb-2">
+                    <h5 class="card-title">{{title}}</h5>
+                    <span class="badge bg-success">Completed</span>
+                </div>
+                <p class="card-text text-muted small mb-2">{{description}}</p>
+                <div class="mb-3">
+                    <span class="badge bg-secondary">{{category}}</span>
+                    <span class="badge bg-{{priorityColor priority}} ms-1">{{priority}}</span>
+                </div>
+                {{#if dueDate}}
+                <p class="mb-2">
+                    <i class="far fa-calendar-alt me-2"></i>
+                    Due: {{formatDate dueDate}}
+                </p>
+                {{/if}}
+                <div class="mb-3">
+                    <small class="text-muted">
+                        <i class="fas fa-user me-1"></i>
+                        {{#if user.displayName}}
+                        {{user.displayName}}
+                        {{else}}
+                        {{user.username}}
+                        {{/if}}
+                    </small>
+                </div>
+            </div>
+            <div class="card-footer text-muted small">
+                Completed: {{formatDate updatedAt}}
+            </div>
+        </div>
+    </div>
+    {{/each}}
+</div>
+
+<div class="row">
+    <div class="col-12">
+        <div class="alert alert-info text-center">
+            <i class="fas fa-info-circle me-2"></i>
+            Showing {{tasks.length}} completed tasks. Register to start managing your own tasks!
+        </div>
+    </div>
+</div>
+{{else}}
+<div class="row">
+    <div class="col-12">
+        <div class="card text-center py-5">
+            <div class="card-body">
+                <i class="fas fa-tasks fa-4x text-muted mb-4"></i>
+                <h3>No public tasks available</h3>
+                <p class="text-muted mb-4">Be the first to complete a task and have it show up here!</p>
+                {{#if user}}
+                <a href="/tasks/add" class="btn btn-primary">Create Your First Task</a>
+                {{else}}
+                <a href="/auth/register" class="btn btn-primary">Join Now</a>
+                {{/if}}
+            </div>
+        </div>
+    </div>
+</div>
+{{/if}}

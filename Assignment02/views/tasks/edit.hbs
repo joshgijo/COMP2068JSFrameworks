@@ -1,0 +1,71 @@
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card shadow">
+            <div class="card-header bg-warning text-white">
+                <h3 class="card-title mb-0"><i class="fas fa-edit me-2"></i>Edit Task</h3>
+            </div>
+            <div class="card-body">
+                <form action="/tasks/{{task._id}}?_method=PUT" method="POST">
+                    <div class="mb-3">
+                        <label for="title" class="form-label">Task Title *</label>
+                        <input type="text" class="form-control" id="title" name="title" value="{{task.title}}" required>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="description" class="form-label">Description</label>
+                        <textarea class="form-control" id="description" name="description" rows="3">{{task.description}}</textarea>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="category" class="form-label">Category</label>
+                            <select class="form-select" id="category" name="category">
+                                <option value="personal" {{#ifEquals task.category 'personal'}}selected{{/ifEquals}}>Personal</option>
+                                <option value="work" {{#ifEquals task.category 'work'}}selected{{/ifEquals}}>Work</option>
+                                <option value="study" {{#ifEquals task.category 'study'}}selected{{/ifEquals}}>Study</option>
+                                <option value="health" {{#ifEquals task.category 'health'}}selected{{/ifEquals}}>Health</option>
+                                <option value="other" {{#ifEquals task.category 'other'}}selected{{/ifEquals}}>Other</option>
+                            </select>
+                        </div>
+                        
+                        <div class="col-md-6 mb-3">
+                            <label for="priority" class="form-label">Priority</label>
+                            <select class="form-select" id="priority" name="priority">
+                                <option value="low" {{#ifEquals task.priority 'low'}}selected{{/ifEquals}}>Low</option>
+                                <option value="medium" {{#ifEquals task.priority 'medium'}}selected{{/ifEquals}}>Medium</option>
+                                <option value="high" {{#ifEquals task.priority 'high'}}selected{{/ifEquals}}>High</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="status" class="form-label">Status</label>
+                            <select class="form-select" id="status" name="status">
+                                <option value="pending" {{#ifEquals task.status 'pending'}}selected{{/ifEquals}}>Pending</option>
+                                <option value="in-progress" {{#ifEquals task.status 'in-progress'}}selected{{/ifEquals}}>In Progress</option>
+                                <option value="completed" {{#ifEquals task.status 'completed'}}selected{{/ifEquals}}>Completed</option>
+                            </select>
+                        </div>
+                        
+                        <div class="col-md-6 mb-3">
+                            <label for="dueDate" class="form-label">Due Date</label>
+                            <input type="date" class="form-control" id="dueDate" name="dueDate" value="{{formatDate task.dueDate 'yyyy-MM-dd'}}">
+                        </div>
+                    </div>
+                    
+                    <div class="d-flex justify-content-between">
+                        <a href="/tasks" class="btn btn-outline-secondary">
+                            <i class="fas fa-arrow-left me-2"></i>Cancel
+                        </a>
+                        <div>
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-save me-2"></i>Update Task
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
