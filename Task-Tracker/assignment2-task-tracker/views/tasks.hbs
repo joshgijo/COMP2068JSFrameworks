@@ -1,0 +1,42 @@
+<div class="d-flex justify-content-between align-items-center mb-3">
+  <h2>{{#if publicView}}Public Tasks{{else}}My Tasks{{/if}}</h2>
+  {{#unless publicView}}
+  <div>
+    <a href="/tasks/add" class="btn btn-success me-2">Add Task</a>
+  </div>
+  {{/unless}}
+</div>
+
+{{!-- search only for private view --}}
+{{#unless publicView}}
+<form class="mb-3" method="get" action="/tasks">
+  <div class="input-group">
+    <input name="q" value="{{q}}" placeholder="Search tasks by keyword" class="form-control" />
+    <button class="btn btn-outline-secondary" type="submit">Search</button>
+  </div>
+</form>
+{{/unless}}
+
+{{#if tasks.length}}
+  <div class="list-group">
+    {{#each tasks}}
+      <div class="list-group-item d-flex justify-content-between align-items-start">
+        <div class="ms-2 me-auto">
+          <div class="fw-bold">{{title}} {{#if completed}}<span class="badge bg-success">Done</span>{{/if}}</div>
+          <div>{{description}}</div>
+          {{#if dueDate}}<small class="text-muted">Due: {{dueDate}}</small>{{/if}}
+        </div>
+        {{#unless ../publicView}}
+        <div class="btn-group">
+          <a class="btn btn-sm btn-primary" href="/tasks/edit/{{_id}}">Edit</a>
+          <form method="post" action="/tasks/delete/{{_id}}?_method=DELETE" onsubmit="return confirmDelete();" style="display:inline;">
+            <button class="btn btn-sm btn-danger">Delete</button>
+          </form>
+        </div>
+        {{/unless}}
+      </div>
+    {{/each}}
+  </div>
+{{else}}
+  <p>No tasks found.</p>
+{{/if}}
